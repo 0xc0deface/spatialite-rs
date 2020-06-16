@@ -2,7 +2,10 @@
 name = "spatialite-rs"
 version = "0.1.0"
 authors = ["Matthew Fletcher <0xc0deface@gmail.com>"]
+license = "MIT OR Apache-2.0"
 edition = "2018"
+description = "Wraps the sqlite crate, so that when you call spatialite_rs::open it will load mod_spatialite.so into the connection before returning."
+repository = "https://github.com/0xc0deface/spatialite-rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
