@@ -1,0 +1,18 @@
+[package]
+name = "spatialite-rs"
+version = "0.1.0"
+authors = ["Matthew Fletcher <0xc0deface@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+sqlite = { version = "0.25.3", default-features = false }
+sqlite3-sys = { version = "0.12.0", default-features = false }
+
+[features]
+default = ["linkage"]
+linkage = ["sqlite3-sys/linkage", "sqlite/linkage"]
+
+[dev-dependencies]
+anyhow = "1.0.31"
