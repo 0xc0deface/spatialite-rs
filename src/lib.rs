@@ -1,23 +1,38 @@
-use sqlite::{self, Connection, Result};
+use sqlite::{self, Connection, Result, OpenFlags};
 use std::path::Path;
 
 pub fn open<T: AsRef<Path>>(path: T) -> Result<Connection> {
-    let connection = sqlite::open(path).unwrap();
+    let connection = sqlite::Connection::open(path).unwrap();
+    load_spatialite_extension( &connection );
+    Ok(connection)
+}
+
+pub fn open_with_flags<T: AsRef<Path>>(path: T, flags: OpenFlags) -> Result<Connection> {
+    let connection = sqlite::Connection::open_with_flags(&path, flags).unwrap();
+    load_spatialite_extension( &connection );
+    Ok(connection)
+}
+
+fn load_spatialite_extension( conn: &Connection )
+{
     unsafe {
-        sqlite3_sys::sqlite3_enable_load_extension(connection.as_raw(), 1);
+        sqlite3_sys::sqlite3_enable_load_extension(conn.as_raw(), 1);
     }
-    connection
+    conn
         .execute("SELECT load_extension('mod_spatialite.so');")
         .unwrap();
     unsafe {
-        sqlite3_sys::sqlite3_enable_load_extension(connection.as_raw(), 0);
+        sqlite3_sys::sqlite3_enable_load_extension(conn.as_raw(), 0);
     }
-    Ok(connection)
 }
 
 #[test]
 fn test_open() -> anyhow::Result<()> {
-    open("spatialite_rs_test.db")?;
+    {
+        open("spatialite_rs_test.db")?;
+    }
+
+    open_with_flags("spatialite_rs_test.db", OpenFlags::new().set_read_only() )?;
     std::fs::remove_file("spatialite_rs_test.db")?;
     Ok(())
 }
