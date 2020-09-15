@@ -1,6 +1,6 @@
 [package]
 name = "spatialite-rs"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Matthew Fletcher <0xc0deface@gmail.com>"]
 license = "MIT OR Apache-2.0"
 edition = "2018"
@@ -18,4 +18,4 @@ default = ["linkage"]
 linkage = ["sqlite3-sys/linkage", "sqlite/linkage"]
 
 [dev-dependencies]
-anyhow = "1.0.31"
+anyhow = "1.0.32"

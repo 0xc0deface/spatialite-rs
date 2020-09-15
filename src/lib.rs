@@ -2,13 +2,13 @@ use sqlite::{self, Connection, Result, OpenFlags};
 use std::path::Path;
 
 pub fn open<T: AsRef<Path>>(path: T) -> Result<Connection> {
-    let connection = sqlite::Connection::open(path).unwrap();
+    let connection = sqlite::Connection::open(path)?;
     load_spatialite_extension( &connection );
     Ok(connection)
 }
 
 pub fn open_with_flags<T: AsRef<Path>>(path: T, flags: OpenFlags) -> Result<Connection> {
-    let connection = sqlite::Connection::open_with_flags(&path, flags).unwrap();
+    let connection = sqlite::Connection::open_with_flags(&path, flags)?;
     load_spatialite_extension( &connection );
     Ok(connection)
 }
