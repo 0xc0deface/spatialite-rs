@@ -17,7 +17,7 @@ fn load_spatialite_extension(conn: &Connection) {
     load_custom_extension(conn, "mod_spatialite.so");
 }
 
-fn load_custom_extension(conn: &Connection, module: &str) {
+pub fn load_custom_extension(conn: &Connection, module: &str) {
     unsafe {
         sqlite3_sys::sqlite3_enable_load_extension(conn.as_raw(), 1);
     }
