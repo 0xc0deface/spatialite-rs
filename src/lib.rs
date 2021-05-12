@@ -28,6 +28,17 @@ pub fn load_custom_extension(conn: &Connection, module: &str) {
     }
 }
 
+pub fn load_custom_extension_ep(conn: &Connection, module: &str, entry_point: &str ) {
+    unsafe {
+        sqlite3_sys::sqlite3_enable_load_extension(conn.as_raw(), 1);
+    }
+    conn.execute(format!("SELECT load_extension('{}', '{}');", module, entry_point))
+        .unwrap();
+    unsafe {
+        sqlite3_sys::sqlite3_enable_load_extension(conn.as_raw(), 0);
+    }
+}
+
 #[test]
 fn test_open() -> anyhow::Result<()> {
     {
