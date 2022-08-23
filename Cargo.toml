@@ -10,8 +10,8 @@ repository = "https://github.com/0xc0deface/spatialite-rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-sqlite = { version = "^0", default-features = false }
-sqlite3-sys = { version = "^0", default-features = false }
+sqlite = { version = "0.27", default-features = false }
+sqlite3-sys = { version = "0.25", default-features = false }
 
 [features]
 default = ["linkage"]
